@@ -1,4 +1,4 @@
-// SPIX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -22,18 +22,18 @@ contract Land is ERC721 {
     Building[] public buildings;
 
     constructor(
-        string memory _name, 
-        string memory _symbol, 
+        string memory _name,
+        string memory _symbol,
         uint256 _cost
     ) ERC721(_name, _symbol) {
         cost = _cost;
 
         buildings.push(
-             Building("City Hall", address(0x0), 0, 0, 0, 10, 10, 10)
+            Building("City Hall", address(0x0), 0, 0, 0, 10, 10, 10)
         );
         buildings.push(Building("Stadium", address(0x0), 0, 10, 0, 10, 5, 3));
         buildings.push(
-             Building("University", address(0x0), 0, -10, 0, 10, 5, 3)
+            Building("University", address(0x0), 0, -10, 0, 10, 5, 3)
         );
         buildings.push(
             Building("Shopping Plaza 1", address(0x0), 10, 0, 0, 5, 25, 5)
@@ -49,7 +49,7 @@ contract Land is ERC721 {
         require(buildings[_id - 1].owner == address(0x0));
         require(msg.value >= cost);
 
-    // NOTE: tokenID always starts from 1 but our array starts from
+        // NOTE: tokenID always starts from 1, but our array starts from 0
         buildings[_id - 1].owner = msg.sender;
         totalSupply = totalSupply + 1;
 
@@ -82,7 +82,7 @@ contract Land is ERC721 {
             _isApprovedOrOwner(_msgSender(), tokenId),
             "ERC721: transfer caller is not owner nor approved"
         );
-   
+
         // Update Building ownership
         buildings[tokenId - 1].owner = to;
 
@@ -90,11 +90,11 @@ contract Land is ERC721 {
     }
 
     // Public View Functions
-    function getBuildings() public view returns(Building[] memory) {
+    function getBuildings() public view returns (Building[] memory) {
         return buildings;
     }
 
-   function getBuilding(uint256 _id) public view returns (Building memory) {
-       return buildings[_id - 1];
+    function getBuilding(uint256 _id) public view returns (Building memory) {
+        return buildings[_id - 1];
     }
 }
